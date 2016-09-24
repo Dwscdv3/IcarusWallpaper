@@ -1,0 +1,9 @@
+图片下载路径
+
+模式
+	昨日图片
+		http://icarus.silversky.moe:666/yyyy/mm/dd
+		幻灯片时间
+	首页最新
+	随机、按序
+		可能404

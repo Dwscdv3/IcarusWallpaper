@@ -1,0 +1,9 @@
+Image source
+	http://icarus.sliversky.moe:666/
+
+Some code is based on the following files
+	https://github.com/Boredbone/MultiMonitorTools (No license)
+		Native/IDesktopWallpaper.cs
+			https://github.com/Boredbone/MultiMonitorTools/blob/master/MultiMonitorTools/Native/DesktopWallpaper.cs
+		Native/Rect.cs
+			https://github.com/Boredbone/MultiMonitorTools/blob/master/MultiMonitorTools/Native/Rect.cs

@@ -1,0 +1,29 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IcarusWallpaper", "IcarusWallpaper\IcarusWallpaper.csproj", "{563F6E8F-325E-4F88-AB14-2EC8B5BB1826}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A5FA05FE-A6CB-4203-88BD-C7433E324D07}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+		THANKS.txt = THANKS.txt
+		TODO.txt = TODO.txt
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{563F6E8F-325E-4F88-AB14-2EC8B5BB1826}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{563F6E8F-325E-4F88-AB14-2EC8B5BB1826}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{563F6E8F-325E-4F88-AB14-2EC8B5BB1826}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{563F6E8F-325E-4F88-AB14-2EC8B5BB1826}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
