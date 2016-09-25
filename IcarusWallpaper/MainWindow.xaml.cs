@@ -54,7 +54,7 @@ namespace IcarusWallpaper
                 break;
             }
             #endregion
-            FetchInterval = TimeSpan . FromSeconds ( 3 );
+            //FetchInterval = TimeSpan . FromSeconds ( 3 );
         }
 
         private void test_Click ( object sender , RoutedEventArgs e )
@@ -107,6 +107,11 @@ namespace IcarusWallpaper
         private void Window_Closing ( object sender , CancelEventArgs e )
         {
             Default . Save ();
+        }
+
+        private void linkHomePage_Click ( object sender , RoutedEventArgs e )
+        {
+            Process . Start ( "http://icarus.silversky.moe:666/?from=Dwscdv3.IcarusWallpaper" );
         }
     }
 }
