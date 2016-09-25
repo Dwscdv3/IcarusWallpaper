@@ -1,6 +1,13 @@
 ﻿using System;
 using System . Collections . Generic;
+using System . ComponentModel;
+using System . Diagnostics;
+using System . IO;
+using System . Net;
+using System . Net . Http;
+using System . Runtime . InteropServices;
 using System . Text;
+using System . Text . RegularExpressions;
 using System . Threading . Tasks;
 using System . Windows;
 using System . Windows . Controls;
@@ -11,24 +18,19 @@ using System . Windows . Media;
 using System . Windows . Media . Imaging;
 using System . Windows . Navigation;
 using System . Windows . Shapes;
-using System . Runtime . InteropServices;
-using System . Net;
-using Microsoft . Win32;
 using IcarusWallpaper . Native;
-using System . Net . Http;
+using Microsoft . Win32;
+//using static IcarusWallpaper . Fetcher;
 using static IcarusWallpaper . Parameters;
 using static IcarusWallpaper . Timer;
-using System . Text . RegularExpressions;
-using System . Diagnostics;
-using System . IO;
-using System . ComponentModel;
+using static IcarusWallpaper . Properties . Settings;
 
 namespace IcarusWallpaper
 {
     public partial class MainWindow : Window
     {
         IDesktopWallpaper wallpaper = (IDesktopWallpaper) new DesktopWallpaper ();
-        
+
         public MainWindow ()
         {
             InitializeComponent ();
@@ -36,8 +38,23 @@ namespace IcarusWallpaper
 
         private void Window_Loaded ( object sender , RoutedEventArgs e )
         {
+            Fetcher . BindWindow ( this );
             DownloadPath = @"G:\Icarus\";
-            
+            textBoxAmount . Text = Default . FetchAmount . ToString ();
+            FetchAmount = Default . FetchAmount;
+            #region FetchSource
+            switch ( Default.FetchSource )
+            {
+            default:
+            case 0:
+                sourceNewest . IsChecked = true;
+                break;
+            case 1:
+                sourceYesterday . IsChecked = true;
+                break;
+            }
+            #endregion
+            FetchInterval = TimeSpan . FromSeconds ( 3 );
         }
 
         private void test_Click ( object sender , RoutedEventArgs e )
@@ -50,102 +67,9 @@ namespace IcarusWallpaper
             }
         }
 
-        bool _isFetching = false;
-        bool isFetching
-        {
-            get
-            {
-                return _isFetching;
-            }
-            set
-            {
-                _isFetching = value;
-                buttonManualFetch . IsEnabled = !value;
-            }
-        }
         private async void buttonManualFetch_Click ( object sender , RoutedEventArgs e )
         {
-            try
-            {
-                isFetching = true;
-
-                var c = new WebClient ();
-                c . DownloadDataCompleted += CheckError;
-
-                label1 . Content = "Fetching RSS...";
-
-                string url = "";
-                switch ( FetchSource )
-                {
-                case WordPressCategory . Index:
-                    url = IcarusNewestRssUrl;
-                    break;
-                case WordPressCategory . Yesterday:
-                    url = IcarusYesterdayRssUrl;
-                    break;
-                default:
-                    url = IcarusNewestRssUrl;
-                    Debug . WriteLine ( "FetchSource is invalid." );
-                    break;
-                }
-                var rss = Encoding . UTF8 . GetString ( await c . DownloadDataTaskAsync ( IcarusNewestRssUrl ) );
-                var matches = Regex . Matches ( rss , @"http://icarus\.silversky\.moe:666/illustration/\d+" );
-                int i = 0, downloaded = 0, skipped = 0;
-                foreach ( Match match in matches )
-                {
-                    i++;
-                    if ( FetchSource == WordPressCategory.Index && i > FetchAmount )
-                    {
-                        break;
-                    }
-
-                    label1 . Content = $"Fetching page {i}...";
-
-                    var html = Encoding . UTF8 . GetString ( await c . DownloadDataTaskAsync ( match . Value ) );
-                    var c2 = new WebClient ();
-                    c2 . DownloadFileCompleted += CheckError;
-                    c2 . DownloadProgressChanged += ( s2 , e2 ) =>
-                      {
-                          DownloadProgress . Value = e2 . BytesReceived;
-                          DownloadProgress . Maximum = e2 . TotalBytesToReceive;
-                      };
-
-                    label1 . Content = $"Downloading {i}...";
-
-                    var uri = new Uri ( Regex . Match ( html , "(?<=<img.+?)http://icarus\\.silversky\\.moe:666/wp-content/uploads/\\d{4}/\\d{2}/.+?(.jpg|.png)" ) . Value );
-                    var path = DownloadPath + Regex . Match ( html , "(?<=(?<=<img.+?)http://icarus\\.silversky\\.moe:666/wp-content/uploads/\\d{4}/\\d{2}/).+?(.jpg|.png)" ) . Value;
-                    var req = WebRequest . CreateHttp ( uri );
-                    var res = req . GetResponse ();
-                    var length = res . ContentLength;
-                    res . Close ();
-                    if ( !File . Exists ( path ) || new FileInfo ( path ) . Length != length )
-                    {
-                        await c2 . DownloadFileTaskAsync ( uri , path );
-                        downloaded++;
-                    }
-                    else
-                    {
-                        skipped++;
-                    }
-                    DownloadProgress . Value = 0;
-                }
-                label1 . Content = $"{DateTime . Now . ToShortTimeString ()}  Done. {downloaded} downloaded, {skipped} skipped.";
-                isFetching = false;
-            }
-            catch ( Exception ex )
-            {
-                Debug . WriteLine ( ex . Message );
-                label1 . Content = $"{DateTime . Now . ToShortTimeString ()}  Aborted due to a network error. (1)";
-                isFetching = false;
-            }
-        }
-
-        void CheckError ( object sender , AsyncCompletedEventArgs e )
-        {
-            Debug . Write ( "Cancelled: " + ( e . Cancelled ? "true" : "false" ) );
-            Debug . Write ( ", Error: " );
-            Debug . WriteLine ( e . Error?.Message );
-            label1 . Content = $"{DateTime . Now . ToShortTimeString ()}  Aborted due to a network error. (2)";
+            await Fetcher . Fetch ();
         }
 
         private void TextBox_DigitOnly ( object sender , TextCompositionEventArgs e )
@@ -165,6 +89,24 @@ namespace IcarusWallpaper
             {
                 textBoxAmount . Text = "1";
             }
+            FetchAmount = int . Parse ( textBoxAmount . Text );
+        }
+
+        private void sourceNewest_Checked ( object sender , RoutedEventArgs e )
+        {
+            FetchSource = WordPressCategory . Index;
+            Default . FetchSource = 0;
+        }
+
+        private void sourceYesterday_Checked ( object sender , RoutedEventArgs e )
+        {
+            FetchSource = WordPressCategory . Yesterday;
+            Default . FetchSource = 1;
+        }
+
+        private void Window_Closing ( object sender , CancelEventArgs e )
+        {
+            Default . Save ();
         }
     }
 }

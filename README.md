@@ -1,5 +1,5 @@
 Status: Under development
 
-# Finished modules
+## Finished modules
 Change wallpaper manually (Windows 8 API used)  
-Fetch images from Icarus
+Fetch images from Icarusv

@@ -40,5 +40,22 @@ namespace IcarusWallpaper
         static DateTime lastWallpaperSetTime = DateTime . MinValue;
         static DispatcherTimer fetchTimer = new DispatcherTimer ();
         static DispatcherTimer wallpaperSetTimer = new DispatcherTimer ();
+
+        static Timer ()
+        {
+            fetchTimer . Tick += FetchTimer_Tick;
+            wallpaperSetTimer . Tick += WallpaperSetTimer_Tick;
+        }
+
+        private static void WallpaperSetTimer_Tick ( object sender , EventArgs e )
+        {
+            throw new NotImplementedException ();
+        }
+
+        private static async void FetchTimer_Tick ( object sender , EventArgs e )
+        {
+fetchTimer . Stop ();
+            await Fetcher . Fetch ();
+        }
     }
 }

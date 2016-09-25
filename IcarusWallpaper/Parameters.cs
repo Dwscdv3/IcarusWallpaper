@@ -12,7 +12,7 @@ namespace IcarusWallpaper
         {
             get
             {
-                return $"http://icarus.silversky.moe:666/{DateTime.Now.Year}/{DateTime.Now.Month}/{DateTime.Now.Day-1}/rss";
+                return $"http://icarus.silversky.moe:666/{ DateTime . Now . Year }/{ DateTime . Now . Month . ToString ( "D2" ) }/{ ( DateTime . Now . Day - 1 ) . ToString ( "D2" ) }/rss";
             }
         }
         public static string IcarusNewestRssUrl

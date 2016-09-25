@@ -5,29 +5,28 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:IcarusWallpaper"
         mc:Ignorable="d"
-        Title="Icarus Wallpaper Helper" Height="350" Width="400" Loaded="Window_Loaded" ResizeMode="NoResize">
+        Title="Icarus Wallpaper Helper" Height="240" Width="320" Loaded="Window_Loaded" ResizeMode="NoResize" Closing="Window_Closing">
     <Grid>
-        <Button x:Name="test" Content="Set Wallpaper" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="244,18,0,0" Click="test_Click" Width="100"/>
-        <Button x:Name="buttonManualFetch" Content="Fetch" HorizontalAlignment="Left" Margin="244,42,0,0" VerticalAlignment="Top" Width="100" Click="buttonManualFetch_Click"/>
-        <Label x:Name="label1" Content="Not downloaded yet." HorizontalAlignment="Left" Margin="0" VerticalAlignment="Bottom"/>
+        <Button x:Name="test" Content="Set Wallpaper" VerticalAlignment="Top" Margin="0,10,10,0" Click="test_Click" HorizontalAlignment="Right" Width="100"/>
+        <Button x:Name="buttonManualFetch" Content="Fetch" Margin="0,34,10,0" VerticalAlignment="Top" Click="buttonManualFetch_Click" HorizontalAlignment="Right" Width="100"/>
+        <Label x:Name="label1" Content="Not fetched yet." HorizontalAlignment="Left" Margin="0" VerticalAlignment="Bottom"/>
         <ProgressBar x:Name="DownloadProgress" Height="25" VerticalAlignment="Bottom" Panel.ZIndex="-1" Foreground="#FF66CCFF" BorderThickness="0" Background="{x:Null}"/>
-        <RadioButton x:Name="radioButton" HorizontalAlignment="Left" Margin="224,80,0,0" VerticalAlignment="Top" GroupName="WallPaperMode">
-            <RadioButton.Content>
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="Newest "></TextBlock>
-                    <TextBox x:Name="textBoxAmount" HorizontalAlignment="Left" Height="14" Margin="0" TextWrapping="Wrap" Text="10" MaxLength="2" VerticalAlignment="Top" Width="20" BorderThickness="0,0,0,1" HorizontalContentAlignment="Center" PreviewTextInput="TextBox_DigitOnly" LostFocus="textBoxAmount_LostFocus" ToolTip="Until to release, the server RSS's actually limit is 20."/>
-                    <TextBlock Text=" pics"></TextBlock>
-                </StackPanel>
-            </RadioButton.Content>
-        </RadioButton>
-        <RadioButton x:Name="radioButton1" Content="Yesterday" HorizontalAlignment="Left" Margin="224,99,0,0" VerticalAlignment="Top" GroupName="WallPaperMode"/>
-        <GroupBox x:Name="groupBox" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="134" Width="183">
+        <GroupBox x:Name="groupBox" HorizontalAlignment="Left" Margin="10,80,0,0" VerticalAlignment="Top" IsEnabled="False">
             <GroupBox.Header>
-                <CheckBox x:Name="checkBox" Content="Auto change wallpaper" />
+                <CheckBox x:Name="checkBox" Content="Auto-replace wallpapers" />
             </GroupBox.Header>
-            <StackPanel Margin="5" >
-                <RadioButton x:Name="radioButton2" Content="RadioButton"/>
-                <RadioButton x:Name="radioButton3" Content="RadioButton"/>
+            <StackPanel Margin="5" />
+        </GroupBox>
+        <GroupBox x:Name="groupBox1" Header="Source" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top">
+            <StackPanel Margin="5">
+                <RadioButton x:Name="sourceNewest" HorizontalAlignment="Left" VerticalAlignment="Top" GroupName="WallPaperMode" Margin="0,0,0,5" Checked="sourceNewest_Checked">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Newest "/>
+                        <TextBox x:Name="textBoxAmount" HorizontalAlignment="Left" Height="14" Margin="0" TextWrapping="Wrap" Text="?" MaxLength="2" VerticalAlignment="Top" Width="20" BorderThickness="0,0,0,1" HorizontalContentAlignment="Center" PreviewTextInput="TextBox_DigitOnly" LostFocus="textBoxAmount_LostFocus" ToolTip="Until to release, the server RSS's actually limit is 20."/>
+                        <TextBlock Text=" pictrues"/>
+                    </StackPanel>
+                </RadioButton>
+                <RadioButton x:Name="sourceYesterday" Content="Yesterday" HorizontalAlignment="Left" VerticalAlignment="Top" GroupName="WallPaperMode" Checked="sourceYesterday_Checked"/>
             </StackPanel>
         </GroupBox>
 

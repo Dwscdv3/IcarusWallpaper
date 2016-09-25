@@ -58,5 +58,29 @@ namespace IcarusWallpaper.Properties {
                 this["DownloadPath"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("10")]
+        public int FetchAmount {
+            get {
+                return ((int)(this["FetchAmount"]));
+            }
+            set {
+                this["FetchAmount"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int FetchSource {
+            get {
+                return ((int)(this["FetchSource"]));
+            }
+            set {
+                this["FetchSource"] = value;
+            }
+        }
     }
 }

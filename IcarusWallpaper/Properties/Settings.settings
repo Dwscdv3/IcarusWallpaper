@@ -11,5 +11,11 @@
     <Setting Name="DownloadPath" Type="System.String" Scope="User">
       <Value Profile="(Default)">\</Value>
     </Setting>
+    <Setting Name="FetchAmount" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">10</Value>
+    </Setting>
+    <Setting Name="FetchSource" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
