@@ -29,21 +29,21 @@ namespace IcarusWallpaper
 {
     public partial class MainWindow : Window
     {
-        IDesktopWallpaper wallpaper = (IDesktopWallpaper) new DesktopWallpaper ();
-
         public MainWindow ()
         {
             InitializeComponent ();
         }
 
-        private void Window_Loaded ( object sender , RoutedEventArgs e )
+        private async void Window_Loaded ( object sender , RoutedEventArgs e )
         {
+            NotifyIcon . Create ( this );
             Fetcher . BindWindow ( this );
-            DownloadPath = @"G:\Icarus\";
+
             textBoxAmount . Text = Default . FetchAmount . ToString ();
             FetchAmount = Default . FetchAmount;
+
             #region FetchSource
-            switch ( Default.FetchSource )
+            switch ( Default . FetchSource )
             {
             default:
             case 0:
@@ -54,21 +54,40 @@ namespace IcarusWallpaper
                 break;
             }
             #endregion
-            //FetchInterval = TimeSpan . FromSeconds ( 3 );
-        }
 
-        private void test_Click ( object sender , RoutedEventArgs e )
-        {
-            OpenFileDialog ofd = new OpenFileDialog ();
-            ofd . InitialDirectory = Environment . GetFolderPath ( Environment . SpecialFolder . MyPictures );
-            if ( ofd . ShowDialog ( this ) == true )
+            randomCheckBox . IsChecked = Default . RandomWallpaper;
+            textBoxInterval . Text = Default . WallpaperSetInterval . TotalMinutes . ToString ();
+            wallpaperMainSwitch . IsChecked = Default . WallpaperMainSwitch;
+
+            if ( !string . IsNullOrWhiteSpace ( Default . DownloadPath ) )
             {
-                wallpaper . SetWallpaper ( null , ofd . FileName );
+                setPath ( Default . DownloadPath );
+            }
+
+            filterCheckBox . IsChecked = Default . FilterAspectRatio;
+            ratio . Value = Default . AspectRatioLimit;
+            ratioText . Text = Default . AspectRatioLimit . ToString ();
+
+            FetchInterval = TimeSpan . FromHours ( 6 );
+            if ( !string . IsNullOrWhiteSpace ( Default . DownloadPath ) )
+            {
+                await Fetcher . Fetch ();
             }
         }
 
+        //private void test_Click ( object sender , RoutedEventArgs e )
+        //{
+        //    OpenFileDialog ofd = new OpenFileDialog ();
+        //    ofd . InitialDirectory = Environment . GetFolderPath ( Environment . SpecialFolder . MyPictures );
+        //    if ( ofd . ShowDialog ( this ) == true )
+        //    {
+        //        wallpaper . SetWallpaper ( null , ofd . FileName );
+        //    }
+        //}
+
         private async void buttonManualFetch_Click ( object sender , RoutedEventArgs e )
         {
+            ResetFetchTimer ();
             await Fetcher . Fetch ();
         }
 
@@ -89,7 +108,8 @@ namespace IcarusWallpaper
             {
                 textBoxAmount . Text = "1";
             }
-            FetchAmount = int . Parse ( textBoxAmount . Text );
+            Default . FetchAmount = FetchAmount = int . Parse ( textBoxAmount . Text );
+            
         }
 
         private void sourceNewest_Checked ( object sender , RoutedEventArgs e )
@@ -106,12 +126,91 @@ namespace IcarusWallpaper
 
         private void Window_Closing ( object sender , CancelEventArgs e )
         {
+            e . Cancel = true;
             Default . Save ();
+            Hide ();
+            //NotifyIcon . Popup ( 3000 , "Icarus Wallpaper" , "I'm always here!" );
         }
 
         private void linkHomePage_Click ( object sender , RoutedEventArgs e )
         {
             Process . Start ( "http://icarus.silversky.moe:666/?from=Dwscdv3.IcarusWallpaper" );
+        }
+
+        private void wallpaperMainSwitch_Checked ( object sender , RoutedEventArgs e )
+        {
+            var wallpaperMainSwitch = (CheckBox) sender;
+            Default . WallpaperMainSwitch = (bool) wallpaperMainSwitch . IsChecked;
+            Default . WallpaperSetInterval = WallpaperSetInterval = TimeSpan . FromMinutes ( int . Parse ( textBoxInterval . Text ) );
+        }
+
+        private void wallpaperMainSwitch_Unchecked ( object sender , RoutedEventArgs e )
+        {
+            var wallpaperMainSwitch = (CheckBox) sender;
+            Default . WallpaperMainSwitch = (bool) wallpaperMainSwitch . IsChecked;
+            Default . WallpaperSetInterval = WallpaperSetInterval = TimeSpan . Zero;
+        }
+
+        private void downloadPathButton_MouseRightButtonDown ( object sender , MouseButtonEventArgs e )
+        {
+            var downloadPathButton = (Button) sender;
+            Default . DownloadPath = "";
+            downloadPathButton . Content = "Set download path...";
+            downloadPathButton . ToolTip = "Current working directory.\nRight click to reset.";
+        }
+
+        private void downloadPathButton_Click ( object sender , RoutedEventArgs e )
+        {
+            var fbd = new System . Windows . Forms . FolderBrowserDialog ();
+            fbd . Description = "_(:зゝ∠)_";
+            if ( fbd . ShowDialog () == System . Windows . Forms . DialogResult . OK )
+            {
+                var path = fbd . SelectedPath + "\\";
+                setPath ( path );
+            }
+        }
+
+        private void setPath ( string path )
+        {
+            downloadPathButton . Content = Default . DownloadPath = path;
+            downloadPathButton . ToolTip = path + "\nRight click to reset.";
+        }
+
+        private void randomCheckBox_Checked ( object sender , RoutedEventArgs e )
+        {
+            Default . RandomWallpaper = true;
+        }
+
+        private void randomCheckBox_Unchecked ( object sender , RoutedEventArgs e )
+        {
+            Default . RandomWallpaper = false;
+        }
+
+        private void textBoxInterval_LostFocus ( object sender , RoutedEventArgs e )
+        {
+            if ( Default . WallpaperMainSwitch )
+            {
+                Default . WallpaperSetInterval = WallpaperSetInterval = TimeSpan . FromMinutes ( int . Parse ( textBoxInterval . Text ) );
+            }
+        }
+
+        private void ratio_ValueChanged ( object sender , RoutedPropertyChangedEventArgs<double> e )
+        {
+            if ( ratioText != null )
+            {
+                ratioText . Text = e . NewValue . ToString ();
+                Default . AspectRatioLimit = e . NewValue;
+            }
+        }
+
+        private void filterCheckBox_Checked ( object sender , RoutedEventArgs e )
+        {
+            Default . FilterAspectRatio = (bool) filterCheckBox . IsChecked;
+        }
+
+        private void filterCheckBox_Unchecked ( object sender , RoutedEventArgs e )
+        {
+            Default . FilterAspectRatio = (bool) filterCheckBox . IsChecked;
         }
     }
 }

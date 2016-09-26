@@ -23,7 +23,7 @@ namespace IcarusWallpaper
             }
         }
 
-        public static string DownloadPath { get; set; }
+        //public static string DownloadPath { get; set; }
         public static int FetchAmount { get; set; }
         public static WordPressCategory FetchSource { get; set; }
     }

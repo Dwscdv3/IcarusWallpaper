@@ -82,5 +82,53 @@ namespace IcarusWallpaper.Properties {
                 this["FetchSource"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool WallpaperMainSwitch {
+            get {
+                return ((bool)(this["WallpaperMainSwitch"]));
+            }
+            set {
+                this["WallpaperMainSwitch"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool RandomWallpaper {
+            get {
+                return ((bool)(this["RandomWallpaper"]));
+            }
+            set {
+                this["RandomWallpaper"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool FilterAspectRatio {
+            get {
+                return ((bool)(this["FilterAspectRatio"]));
+            }
+            set {
+                this["FilterAspectRatio"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public double AspectRatioLimit {
+            get {
+                return ((double)(this["AspectRatioLimit"]));
+            }
+            set {
+                this["AspectRatioLimit"] = value;
+            }
+        }
     }
 }

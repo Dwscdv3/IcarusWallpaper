@@ -5,34 +5,54 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:IcarusWallpaper"
         mc:Ignorable="d"
-        Title="Icarus Wallpaper Helper" Height="240" Width="320" Loaded="Window_Loaded" ResizeMode="NoResize" Closing="Window_Closing" Icon="50610710_p0-55d3371fv1_site_icon-128x128_transparent.ico">
+        Title="Icarus Wallpaper" Height="280" Width="260" Loaded="Window_Loaded" ResizeMode="NoResize" Closing="Window_Closing" Icon="50610710_p0-55d3371fv1_site_icon-128x128_transparent.ico">
     <Grid>
-        <Button x:Name="test" Content="Set Wallpaper" VerticalAlignment="Top" Margin="0,40,10,0" Click="test_Click" HorizontalAlignment="Right" Width="100"/>
-        <Button x:Name="buttonManualFetch" Content="Fetch" Margin="0,64,10,0" VerticalAlignment="Top" Click="buttonManualFetch_Click" HorizontalAlignment="Right" Width="100"/>
-        <Label x:Name="label1" Content="Not fetched yet." HorizontalAlignment="Left" Margin="0" VerticalAlignment="Bottom"/>
+        <Button x:Name="buttonManualFetch" Content="Fetch now" Margin="0,0,10,30" Click="buttonManualFetch_Click" Height="19" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="80"/>
+        <Label x:Name="label1" Content="Not fetched yet." Margin="0" VerticalAlignment="Bottom" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
         <ProgressBar x:Name="DownloadProgress" Height="25" VerticalAlignment="Bottom" Panel.ZIndex="-1" Foreground="#FF66CCFF" BorderThickness="0" Background="{x:Null}"/>
-        <GroupBox x:Name="groupBox" HorizontalAlignment="Left" Margin="10,80,0,0" VerticalAlignment="Top" IsEnabled="False">
+        <GroupBox x:Name="groupBox" Margin="10,124,10,0" VerticalAlignment="Top">
             <GroupBox.Header>
-                <CheckBox x:Name="checkBox" Content="Auto-replace wallpapers" />
+                <CheckBox x:Name="wallpaperMainSwitch" Content="Auto-replace wallpapers" Checked="wallpaperMainSwitch_Checked" Unchecked="wallpaperMainSwitch_Unchecked" />
             </GroupBox.Header>
-            <StackPanel Margin="5" />
+            <StackPanel x:Name="wallpaperStackPanel" Margin="5" >
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,5" >
+                    <TextBlock TextWrapping="Wrap" Text="Every "/>
+                    <TextBox x:Name="textBoxInterval" HorizontalAlignment="Left" Height="14" Margin="0" TextWrapping="Wrap" Text="30" MaxLength="4" VerticalAlignment="Top" Width="36" BorderThickness="0,0,0,1" HorizontalContentAlignment="Center" PreviewTextInput="TextBox_DigitOnly" LostFocus="textBoxInterval_LostFocus" ToolTip=""/>
+                    <TextBlock TextWrapping="Wrap" Text=" minutes"/>
+                </StackPanel>
+                <CheckBox x:Name="randomCheckBox" Content="Random" Checked="randomCheckBox_Checked" Unchecked="randomCheckBox_Unchecked"/>
+            </StackPanel>
         </GroupBox>
-        <GroupBox x:Name="groupBox1" Header="Source" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top">
+        <GroupBox x:Name="groupBox1" Header="Source" Margin="10,10,10,0" VerticalAlignment="Top">
             <StackPanel Margin="5">
                 <RadioButton x:Name="sourceNewest" HorizontalAlignment="Left" VerticalAlignment="Top" GroupName="WallPaperMode" Margin="0,0,0,5" Checked="sourceNewest_Checked">
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="Newest "/>
+                        <TextBlock Text="Recent "/>
                         <TextBox x:Name="textBoxAmount" HorizontalAlignment="Left" Height="14" Margin="0" TextWrapping="Wrap" Text="?" MaxLength="2" VerticalAlignment="Top" Width="20" BorderThickness="0,0,0,1" HorizontalContentAlignment="Center" PreviewTextInput="TextBox_DigitOnly" LostFocus="textBoxAmount_LostFocus" ToolTip="Until to release, the server RSS's actually limit is 20."/>
                         <TextBlock Text=" pictrues"/>
                     </StackPanel>
                 </RadioButton>
-                <RadioButton x:Name="sourceYesterday" Content="Yesterday" HorizontalAlignment="Left" VerticalAlignment="Top" GroupName="WallPaperMode" Checked="sourceYesterday_Checked"/>
+                <RadioButton x:Name="sourceYesterday" Content="Yesterday" HorizontalAlignment="Left" VerticalAlignment="Top" GroupName="WallPaperMode" Checked="sourceYesterday_Checked" Margin="0,0,0,5"/>
+                <StackPanel Orientation="Horizontal">
+                    <CheckBox x:Name="filterCheckBox" Margin="0,0,5,5" Content="Filter aspect ratio" Checked="filterCheckBox_Checked" Unchecked="filterCheckBox_Unchecked"/>
+                    <Slider x:Name="ratio" Width="50" RenderTransformOrigin="0.5,0.5" Height="30" LargeChange="0.1" SmallChange="0.01" Minimum="0.8" Maximum="1.7" Margin="0,0,5,0" Value="1" ValueChanged="ratio_ValueChanged" IsSnapToTickEnabled="True" TickFrequency="0.01">
+                        <Slider.LayoutTransform>
+                            <TransformGroup>
+                                <ScaleTransform ScaleY="0.5"/>
+                                <SkewTransform/>
+                                <RotateTransform/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </Slider.LayoutTransform>
+                    </Slider>
+                    <TextBlock x:Name="ratioText" TextWrapping="Wrap" Text="1.00"/>
+                </StackPanel>
+                <Button x:Name="downloadPathButton" Content="Set download path..." MouseRightButtonDown="downloadPathButton_MouseRightButtonDown" ToolTip="Current working directory.&#13;Right click to reset." Click="downloadPathButton_Click"/>
             </StackPanel>
         </GroupBox>
-        <TextBlock x:Name="textBlock" Margin="10,0,0,29" TextWrapping="Wrap" VerticalAlignment="Bottom" HorizontalAlignment="Left">
-            <Hyperlink x:Name="linkHomePage" Click="linkHomePage_Click">Icarus 主页，欢迎围观</Hyperlink>
+        <TextBlock x:Name="textBlock" Margin="10,0,0,30" TextWrapping="Wrap" VerticalAlignment="Bottom" HorizontalAlignment="Left">
+            <Hyperlink x:Name="linkHomePage" Click="linkHomePage_Click">Icarus Site</Hyperlink>
         </TextBlock>
-        <Label x:Name="label" Content="Debug:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="190,10,0,0"/>
 
     </Grid>
 </Window>

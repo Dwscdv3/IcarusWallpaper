@@ -9,6 +9,7 @@ using System . Text;
 using System . Text . RegularExpressions;
 using System . Threading . Tasks;
 using static IcarusWallpaper . Parameters;
+using static IcarusWallpaper . Properties . Settings;
 
 namespace IcarusWallpaper
 {
@@ -63,11 +64,12 @@ namespace IcarusWallpaper
                 var rss = Encoding . UTF8 . GetString ( await c . DownloadDataTaskAsync ( IcarusNewestRssUrl ) );
                 var matches = Regex . Matches ( rss , @"http://icarus\.silversky\.moe:666/illustration/\d+" );
 
-                int downloaded = 0, skipped = 0, actualAmount = Min ( FetchAmount , matches . Count );
+                List<string> list = new List<string> ();
+                int downloaded = 0, skipped = 0, actualAmount = Min ( FetchAmount , matches . Count ), fetchAmount = FetchAmount;
                 for ( int i = matches . Count - 1 ; i >= 0 ; i-- )
                 {
                     var match = matches [ i ];
-                    if ( FetchSource == WordPressCategory . Index && i >= FetchAmount )
+                    if ( FetchSource == WordPressCategory . Index && i >= fetchAmount )
                     {
                         continue;
                     }
@@ -75,6 +77,19 @@ namespace IcarusWallpaper
                     window . label1 . Content = $"Fetching page {actualAmount - i} / {actualAmount} ...";
 
                     var html = Encoding . UTF8 . GetString ( await c . DownloadDataTaskAsync ( match . Value ) );
+
+                    if ( Default . FilterAspectRatio )
+                    {
+                        var width = double . Parse ( Regex . Match ( html , "(?<=<img .+? width=\")\\d+" ) . Value );
+                        var height = double . Parse ( Regex . Match ( html , "(?<=<img .+? height=\")\\d+" ) . Value );
+                        var ratio = width / height;
+                        if ( ratio < Default . AspectRatioLimit )
+                        {
+                            continue;
+                        }
+                    }
+
+
                     var c2 = new WebClient ();
                     //c2 . DownloadFileCompleted += CheckError;
                     c2 . DownloadProgressChanged += ( s2 , e2 ) =>
@@ -86,11 +101,13 @@ namespace IcarusWallpaper
                     window . label1 . Content = $"Downloading {actualAmount - i} / {actualAmount} ...";
 
                     var uri = new Uri ( Regex . Match ( html , "(?<=<img.+?)http://icarus\\.silversky\\.moe:666/wp-content/uploads/\\d{4}/\\d{2}/.+?(.jpg|.png)" ) . Value );
-                    var path = DownloadPath + Regex . Match ( html , "(?<=(?<=<img.+?)http://icarus\\.silversky\\.moe:666/wp-content/uploads/\\d{4}/\\d{2}/).+?(.jpg|.png)" ) . Value;
+                    var path = Default . DownloadPath + Regex . Match ( html , "(?<=(?<=<img.+?)http://icarus\\.silversky\\.moe:666/wp-content/uploads/\\d{4}/\\d{2}/).+?(.jpg|.png)" ) . Value;
+
                     var req = WebRequest . CreateHttp ( uri );
                     var res = req . GetResponse ();
                     var length = res . ContentLength;
                     res . Close ();
+
                     if ( !File . Exists ( path ) || new FileInfo ( path ) . Length != length )
                     {
                         await c2 . DownloadFileTaskAsync ( uri , path );
@@ -100,10 +117,16 @@ namespace IcarusWallpaper
                     {
                         skipped++;
                     }
+
+                    list . Add ( path );
+
                     window . DownloadProgress . Value = 0;
                 }
                 window . label1 . Content = $"{DateTime . Now . ToShortTimeString ()}  Done. {downloaded} downloaded, {skipped} skipped.";
                 IsFetching = false;
+
+                list . Reverse ();
+                Timer . Wallpapers = list;
             }
             catch ( Exception ex )
             {
