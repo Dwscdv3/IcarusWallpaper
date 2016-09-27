@@ -7,3 +7,7 @@ Some code is based on the following files
 			https://github.com/Boredbone/MultiMonitorTools/blob/master/MultiMonitorTools/Native/DesktopWallpaper.cs
 		Native/Rect.cs
 			https://github.com/Boredbone/MultiMonitorTools/blob/master/MultiMonitorTools/Native/Rect.cs
+	http://blog.csdn.net/maganlin/article/details/5798011
+		Util.cs@GetRunningInstance
+	http://www.cnblogs.com/daimage/archive/2012/06/21/2557472.html
+		Native/HandleWindow.cs

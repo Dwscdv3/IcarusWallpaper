@@ -24,11 +24,14 @@ using Microsoft . Win32;
 using static IcarusWallpaper . Parameters;
 using static IcarusWallpaper . Timer;
 using static IcarusWallpaper . Properties . Settings;
+using System . Windows . Threading;
 
 namespace IcarusWallpaper
 {
     public partial class MainWindow : Window
     {
+        DispatcherTimer showWindowTimer = new DispatcherTimer ();
+
         public MainWindow ()
         {
             InitializeComponent ();
@@ -73,6 +76,18 @@ namespace IcarusWallpaper
             {
                 await Fetcher . Fetch ();
             }
+
+            showWindowTimer . Interval = TimeSpan . FromSeconds ( 1 );
+            showWindowTimer . Tick += ( s2 , e2 ) =>
+            {
+                if ( File . Exists ( AppDomain . CurrentDomain . BaseDirectory + "Icarus_Show" ) )
+                {
+                    Show ();
+                    Activate ();
+                    File . Delete ( AppDomain . CurrentDomain . BaseDirectory + "Icarus_Show" );
+                }
+            };
+            showWindowTimer . Start ();
         }
 
         //private void test_Click ( object sender , RoutedEventArgs e )
@@ -109,7 +124,7 @@ namespace IcarusWallpaper
                 textBoxAmount . Text = "1";
             }
             Default . FetchAmount = FetchAmount = int . Parse ( textBoxAmount . Text );
-            
+
         }
 
         private void sourceNewest_Checked ( object sender , RoutedEventArgs e )

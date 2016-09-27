@@ -23,6 +23,7 @@ namespace IcarusWallpaper
                 if ( e . Button == MouseButtons . Left )
                 {
                     window . Show ();
+                    window . Activate ();
                 }
             };
             notifyIcon . ContextMenu = new ContextMenu ( new MenuItem []

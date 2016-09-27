@@ -10,9 +10,9 @@ using System . Windows;
 [assembly: AssemblyTitle ( "IcarusWallpaper" )]
 [assembly: AssemblyDescription ( "" )]
 [assembly: AssemblyConfiguration ( "" )]
-[assembly: AssemblyCompany ( "" )]
+[assembly: AssemblyCompany ( "Dwscdv3" )]
 [assembly: AssemblyProduct ( "IcarusWallpaper" )]
-[assembly: AssemblyCopyright ( "Copyright ©  2016" )]
+[assembly: AssemblyCopyright ( "GPL Public Licence v3" )]
 [assembly: AssemblyTrademark ( "" )]
 [assembly: AssemblyCulture ( "" )]
 
