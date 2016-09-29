@@ -1,4 +1,4 @@
-## Status: Released  
+## Status: Released - 注意：此分支不是开发分支(master)，不再添加新功能  
 
 ### 当前版本的各种隐藏设定  
 * Windows 8 or above required... （`IDesktopWallpaper` interface  
