@@ -1,4 +1,4 @@
-## Status: Released  
+## Status: Developing  
 
 ### 当前版本的各种隐藏设定  
 * Windows 8 or above required... （`IDesktopWallpaper` interface  
