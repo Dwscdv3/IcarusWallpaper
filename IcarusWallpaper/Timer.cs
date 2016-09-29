@@ -87,7 +87,6 @@ namespace IcarusWallpaper
 
         private static async void FetchTimer_Tick ( object sender , EventArgs e )
         {
-            fetchTimer . Stop ();
             await Fetcher . Fetch ();
         }
 
