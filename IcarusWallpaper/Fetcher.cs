@@ -7,6 +7,7 @@ using System . Linq;
 using System . Net;
 using System . Text;
 using System . Text . RegularExpressions;
+using System . Threading;
 using System . Threading . Tasks;
 using static IcarusWallpaper . Parameters;
 using static IcarusWallpaper . Properties . Settings;
@@ -65,7 +66,7 @@ namespace IcarusWallpaper
                 var matches = Regex . Matches ( rss , @"http://icarus\.silversky\.moe:666/illustration/\d+" );
 
                 List<string> list = new List<string> ();
-                int downloaded = 0, skipped = 0, actualAmount = Min ( FetchAmount , matches . Count ), fetchAmount = FetchAmount;
+                int downloaded = 0, skipped = 0, filtered = 0, actualAmount = Min ( FetchAmount , matches . Count ), fetchAmount = FetchAmount;
                 for ( int i = matches . Count - 1 ; i >= 0 ; i-- )
                 {
                     var match = matches [ i ];
@@ -85,6 +86,7 @@ namespace IcarusWallpaper
                         var ratio = width / height;
                         if ( ratio < Default . AspectRatioLimit )
                         {
+                            filtered++;
                             continue;
                         }
                     }
@@ -121,8 +123,10 @@ namespace IcarusWallpaper
                     list . Add ( path );
 
                     window . DownloadProgress . Value = 0;
+
+                    //Thread . Sleep ( 1000 );
                 }
-                window . label1 . Content = $"{DateTime . Now . ToShortTimeString ()}  Done. {downloaded} downloaded, {skipped} skipped.";
+                window . label1 . Content = $"{DateTime . Now . ToShortTimeString ()}  Done. {downloaded} downloaded, {skipped} skipped, {filtered} filtered.";
                 IsFetching = false;
 
                 list . Reverse ();
@@ -130,6 +134,8 @@ namespace IcarusWallpaper
             }
             catch ( Exception ex )
             {
+                var errString = $"{DateTime . Now . ToString ()}: {ex . ToString ()}\r\nMessage: {ex . Message}\r\nCall Stack:\r\n{ex . StackTrace}\r\n\r\n";
+                File . AppendAllText ( "IcarusWallpaperError.log" , errString );
                 Debug . WriteLine ( ex . Message );
                 window . label1 . Content = $"{DateTime . Now . ToShortTimeString ()}  Aborted due to a network error. (1)";
                 IsFetching = false;

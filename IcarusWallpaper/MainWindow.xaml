@@ -5,12 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:IcarusWallpaper"
         mc:Ignorable="d"
-        Title="Icarus Wallpaper" Height="280" Width="260" Loaded="Window_Loaded" ResizeMode="NoResize" Closing="Window_Closing" Icon="50610710_p0-55d3371fv1_site_icon-128x128_transparent.ico">
+        Title="Icarus Wallpaper" Height="280" Width="403" Loaded="Window_Loaded" ResizeMode="NoResize" Closing="Window_Closing" Icon="50610710_p0-55d3371fv1_site_icon-128x128_transparent.ico">
     <Grid>
         <Button x:Name="buttonManualFetch" Content="Fetch now" Margin="0,0,10,30" Click="buttonManualFetch_Click" Height="19" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="80"/>
         <Label x:Name="label1" Content="Not fetched yet." Margin="0" VerticalAlignment="Bottom" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
         <ProgressBar x:Name="DownloadProgress" Height="25" VerticalAlignment="Bottom" Panel.ZIndex="-1" Foreground="#FF66CCFF" BorderThickness="0" Background="{x:Null}"/>
-        <GroupBox x:Name="groupBox" Margin="10,124,10,0" VerticalAlignment="Top">
+        <GroupBox x:Name="groupBox" Margin="10,124,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="234">
             <GroupBox.Header>
                 <CheckBox x:Name="wallpaperMainSwitch" Content="Auto-replace wallpapers" Checked="wallpaperMainSwitch_Checked" Unchecked="wallpaperMainSwitch_Unchecked" />
             </GroupBox.Header>
@@ -23,7 +23,7 @@
                 <CheckBox x:Name="randomCheckBox" Content="Random" Checked="randomCheckBox_Checked" Unchecked="randomCheckBox_Unchecked"/>
             </StackPanel>
         </GroupBox>
-        <GroupBox x:Name="groupBox1" Header="Source" Margin="10,10,10,0" VerticalAlignment="Top">
+        <GroupBox x:Name="groupBox1" Header="Source" Margin="10,10,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="234">
             <StackPanel Margin="5">
                 <RadioButton x:Name="sourceNewest" HorizontalAlignment="Left" VerticalAlignment="Top" GroupName="WallPaperMode" Margin="0,0,0,5" Checked="sourceNewest_Checked">
                     <StackPanel Orientation="Horizontal">
@@ -53,6 +53,11 @@
         <TextBlock x:Name="textBlock" Margin="10,0,0,30" TextWrapping="Wrap" VerticalAlignment="Bottom" HorizontalAlignment="Left">
             <Hyperlink x:Name="linkHomePage" Click="linkHomePage_Click">Icarus Site</Hyperlink>
         </TextBlock>
+        <GroupBox x:Name="groupBox2" Header="Category" Margin="249,10,10,0" Height="181" VerticalAlignment="Top">
+            <TreeView x:Name="categoryTreeView">
+                <TreeViewItem Header="TreeViewItem"/>
+            </TreeView>
+        </GroupBox>
 
     </Grid>
 </Window>

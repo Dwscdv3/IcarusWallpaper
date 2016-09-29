@@ -1,8 +1,8 @@
 ﻿using System;
 using System . Collections . Generic;
 using System . Windows . Threading;
-using static IcarusWallpaper . Properties . Settings;
 using IcarusWallpaper . Native;
+using static IcarusWallpaper . Properties . Settings;
 
 namespace IcarusWallpaper
 {
@@ -87,7 +87,7 @@ namespace IcarusWallpaper
 
         private static async void FetchTimer_Tick ( object sender , EventArgs e )
         {
-            fetchTimer . Stop ();
+            //fetchTimer . Stop (); // 为了调试方便，写了不该写的东西，导致 bug。。。留在这以作警示
             await Fetcher . Fetch ();
         }
 
