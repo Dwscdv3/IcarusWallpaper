@@ -52,16 +52,17 @@ namespace IcarusWallpaper
                 switch ( FetchSource )
                 {
                 case WordPressCategory . Index:
-                    url = IcarusNewestRssUrl;
+                    url = IcarusNewestUrl;
                     break;
                 case WordPressCategory . Yesterday:
-                    url = IcarusYesterdayRssUrl;
+                    url = IcarusYesterdayUrl;
                     break;
                 default:
-                    url = IcarusNewestRssUrl;
+                    url = IcarusNewestUrl;
                     Debug . WriteLine ( "FetchSource is invalid." );
                     break;
                 }
+                url += "/rss";
                 var rss = Encoding . UTF8 . GetString ( await c . DownloadDataTaskAsync ( IcarusNewestRssUrl ) );
                 var matches = Regex . Matches ( rss , @"http://icarus\.silversky\.moe:666/illustration/\d+" );
 

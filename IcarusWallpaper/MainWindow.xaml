@@ -10,7 +10,7 @@
         <Button x:Name="buttonManualFetch" Content="Fetch now" Margin="0,0,10,30" Click="buttonManualFetch_Click" Height="19" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="80"/>
         <Label x:Name="label1" Content="Not fetched yet." Margin="0" VerticalAlignment="Bottom" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
         <ProgressBar x:Name="DownloadProgress" Height="25" VerticalAlignment="Bottom" Panel.ZIndex="-1" Foreground="#FF66CCFF" BorderThickness="0" Background="{x:Null}"/>
-        <GroupBox x:Name="groupBox" Margin="10,124,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="234">
+        <GroupBox x:Name="groupBox" Margin="10,138,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="234">
             <GroupBox.Header>
                 <CheckBox x:Name="wallpaperMainSwitch" Content="Auto-replace wallpapers" Checked="wallpaperMainSwitch_Checked" Unchecked="wallpaperMainSwitch_Unchecked" />
             </GroupBox.Header>
@@ -33,6 +33,7 @@
                     </StackPanel>
                 </RadioButton>
                 <RadioButton x:Name="sourceYesterday" Content="Yesterday" HorizontalAlignment="Left" VerticalAlignment="Top" GroupName="WallPaperMode" Checked="sourceYesterday_Checked" Margin="0,0,0,5"/>
+                <RadioButton x:Name="radioButton" Content="Category→" Margin="0,0,0,5"/>
                 <StackPanel Orientation="Horizontal">
                     <CheckBox x:Name="filterCheckBox" Margin="0,0,5,5" Content="Filter aspect ratio" Checked="filterCheckBox_Checked" Unchecked="filterCheckBox_Unchecked"/>
                     <Slider x:Name="ratio" Width="50" RenderTransformOrigin="0.5,0.5" Height="30" LargeChange="0.1" SmallChange="0.01" Minimum="0.8" Maximum="1.7" Margin="0,0,5,0" Value="1" ValueChanged="ratio_ValueChanged" IsSnapToTickEnabled="True" TickFrequency="0.01">
@@ -55,7 +56,7 @@
         </TextBlock>
         <GroupBox x:Name="groupBox2" Header="Category" Margin="249,10,10,0" Height="181" VerticalAlignment="Top">
             <TreeView x:Name="categoryTreeView">
-                <TreeViewItem Header="TreeViewItem"/>
+                <TreeViewItem Header="Index"/>
             </TreeView>
         </GroupBox>
 

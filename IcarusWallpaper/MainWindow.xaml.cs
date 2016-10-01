@@ -150,7 +150,7 @@ namespace IcarusWallpaper
         {
             var wallpaperMainSwitch = (CheckBox) sender;
             Default . WallpaperMainSwitch = (bool) wallpaperMainSwitch . IsChecked;
-            Default . WallpaperSetInterval = WallpaperSetInterval = TimeSpan . Zero;
+            /*Default . WallpaperSetInterval = */WallpaperSetInterval = TimeSpan . Zero;
         }
 
         private void downloadPathButton_MouseRightButtonDown ( object sender , MouseButtonEventArgs e )
