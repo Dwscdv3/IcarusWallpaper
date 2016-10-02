@@ -61,6 +61,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AutoRun.cs" />
     <Compile Include="Fetcher.cs" />
     <Compile Include="Native\HandleWindow.cs" />
     <Compile Include="NotifyIcon.cs" />

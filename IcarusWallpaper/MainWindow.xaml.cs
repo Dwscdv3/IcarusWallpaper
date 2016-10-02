@@ -58,6 +58,8 @@ namespace IcarusWallpaper
             ratio . Value = Default . AspectRatioLimit;
             ratioText . Text = Default . AspectRatioLimit . ToString ();
 
+            autoRunCheckBox . IsChecked = AutoRun . IsEnabled;
+
             FetchInterval = TimeSpan . FromHours ( 6 );
             if ( !string . IsNullOrWhiteSpace ( Default . DownloadPath ) )
             {
@@ -213,6 +215,16 @@ namespace IcarusWallpaper
         private void filterCheckBox_Unchecked ( object sender , RoutedEventArgs e )
         {
             Default . FilterAspectRatio = (bool) filterCheckBox . IsChecked;
+        }
+
+        private void autoRunCheckBox_Checked ( object sender , RoutedEventArgs e )
+        {
+            AutoRun . IsEnabled = true;
+        }
+
+        private void autoRunCheckBox_Unchecked ( object sender , RoutedEventArgs e )
+        {
+            AutoRun . IsEnabled = false;
         }
     }
 }

@@ -57,13 +57,15 @@ namespace IcarusWallpaper
                 case WordPressCategory . Yesterday:
                     url = IcarusYesterdayUrl;
                     break;
+                case WordPressCategory . Specified:
+                    throw new NotImplementedException (); // TODO
                 default:
                     url = IcarusNewestUrl;
                     Debug . WriteLine ( "FetchSource is invalid." );
                     break;
                 }
                 url += "/rss";
-                var rss = Encoding . UTF8 . GetString ( await c . DownloadDataTaskAsync ( IcarusNewestRssUrl ) );
+                var rss = Encoding . UTF8 . GetString ( await c . DownloadDataTaskAsync ( url ) );
                 var matches = Regex . Matches ( rss , @"http://icarus\.silversky\.moe:666/illustration/\d+" );
 
                 List<string> list = new List<string> ();

@@ -7,6 +7,13 @@ namespace IcarusWallpaper
 {
     static class Parameters
     {
+        public static string RegistryAppName
+        {
+            get
+            {
+                return "Icarus Wallpaper";
+            }
+        }
         public static string IcarusBase
         {
             get
@@ -45,6 +52,7 @@ namespace IcarusWallpaper
     enum WordPressCategory
     {
         Index,
-        Yesterday
+        Yesterday,
+        Specified
     }
 }

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:IcarusWallpaper"
         mc:Ignorable="d"
-        Title="Icarus Wallpaper" Height="280" Width="403" Loaded="Window_Loaded" ResizeMode="NoResize" Closing="Window_Closing" Icon="50610710_p0-55d3371fv1_site_icon-128x128_transparent.ico">
+        Title="Icarus Wallpaper" Height="300" Width="400" Loaded="Window_Loaded" ResizeMode="NoResize" Closing="Window_Closing" Icon="50610710_p0-55d3371fv1_site_icon-128x128_transparent.ico">
     <Grid>
         <Button x:Name="buttonManualFetch" Content="Fetch now" Margin="0,0,10,30" Click="buttonManualFetch_Click" Height="19" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="80"/>
         <Label x:Name="label1" Content="Not fetched yet." Margin="0" VerticalAlignment="Bottom" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
@@ -33,7 +33,7 @@
                     </StackPanel>
                 </RadioButton>
                 <RadioButton x:Name="sourceYesterday" Content="Yesterday" HorizontalAlignment="Left" VerticalAlignment="Top" GroupName="WallPaperMode" Checked="sourceYesterday_Checked" Margin="0,0,0,5"/>
-                <RadioButton x:Name="radioButton" Content="Category→" Margin="0,0,0,5"/>
+                <RadioButton x:Name="radioButton" Content="Category →" Margin="0,0,0,5"/>
                 <StackPanel Orientation="Horizontal">
                     <CheckBox x:Name="filterCheckBox" Margin="0,0,5,5" Content="Filter aspect ratio" Checked="filterCheckBox_Checked" Unchecked="filterCheckBox_Unchecked"/>
                     <Slider x:Name="ratio" Width="50" RenderTransformOrigin="0.5,0.5" Height="30" LargeChange="0.1" SmallChange="0.01" Minimum="0.8" Maximum="1.7" Margin="0,0,5,0" Value="1" ValueChanged="ratio_ValueChanged" IsSnapToTickEnabled="True" TickFrequency="0.01">
@@ -51,7 +51,7 @@
                 <Button x:Name="downloadPathButton" Content="Set download path..." MouseRightButtonDown="downloadPathButton_MouseRightButtonDown" ToolTip="Current working directory.&#13;Right click to reset." Click="downloadPathButton_Click"/>
             </StackPanel>
         </GroupBox>
-        <TextBlock x:Name="textBlock" Margin="10,0,0,30" TextWrapping="Wrap" VerticalAlignment="Bottom" HorizontalAlignment="Left">
+        <TextBlock x:Name="textBlock" Margin="240,0,0,29" TextWrapping="Wrap" VerticalAlignment="Bottom" HorizontalAlignment="Left">
             <Hyperlink x:Name="linkHomePage" Click="linkHomePage_Click">Icarus Site</Hyperlink>
         </TextBlock>
         <GroupBox x:Name="groupBox2" Header="Category" Margin="249,10,10,0" Height="181" VerticalAlignment="Top">
@@ -59,6 +59,7 @@
                 <TreeViewItem Header="Index"/>
             </TreeView>
         </GroupBox>
+        <CheckBox x:Name="autoRunCheckBox" Content="Start up with Windows" HorizontalAlignment="Left" Margin="10,210,0,0" VerticalAlignment="Top" Checked="autoRunCheckBox_Checked" Unchecked="autoRunCheckBox_Unchecked"/>
 
     </Grid>
 </Window>
