@@ -2,13 +2,13 @@
 using System . Collections . Generic;
 using System . Configuration;
 using System . Data;
+using System . IO;
 using System . Linq;
 using System . Threading . Tasks;
 using System . Windows;
-using static IcarusWallpaper . Util;
 using static IcarusWallpaper . Native . HandleWindow;
 using static IcarusWallpaper . Properties . Settings;
-using System . IO;
+using static IcarusWallpaper . Util;
 
 namespace IcarusWallpaper
 {

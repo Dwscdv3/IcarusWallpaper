@@ -73,10 +73,10 @@ namespace IcarusWallpaper.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public int FetchSource {
+        [global::System.Configuration.DefaultSettingValueAttribute("/")]
+        public string FetchSource {
             get {
-                return ((int)(this["FetchSource"]));
+                return ((string)(this["FetchSource"]));
             }
             set {
                 this["FetchSource"] = value;
@@ -128,6 +128,15 @@ namespace IcarusWallpaper.Properties {
             }
             set {
                 this["AspectRatioLimit"] = value;
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("http://icarus.silversky.moe:666")]
+        public string IcarusBase {
+            get {
+                return ((string)(this["IcarusBase"]));
             }
         }
     }

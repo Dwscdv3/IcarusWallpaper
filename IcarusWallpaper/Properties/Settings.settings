@@ -14,8 +14,8 @@
     <Setting Name="FetchAmount" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">10</Value>
     </Setting>
-    <Setting Name="FetchSource" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">0</Value>
+    <Setting Name="FetchSource" Type="System.String" Scope="User">
+      <Value Profile="(Default)">/</Value>
     </Setting>
     <Setting Name="WallpaperMainSwitch" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
@@ -28,6 +28,9 @@
     </Setting>
     <Setting Name="AspectRatioLimit" Type="System.Double" Scope="User">
       <Value Profile="(Default)">1</Value>
+    </Setting>
+    <Setting Name="IcarusBase" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">http://icarus.silversky.moe:666</Value>
     </Setting>
   </Settings>
 </SettingsFile>

@@ -33,16 +33,16 @@ namespace IcarusWallpaper
             FetchAmount = Default . FetchAmount;
 
             #region FetchSource
-            switch ( Default . FetchSource )
-            {
-            default:
-            case 0:
-                sourceNewest . IsChecked = true;
-                break;
-            case 1:
-                sourceYesterday . IsChecked = true;
-                break;
-            }
+            //switch ( Default . FetchSource )
+            //{
+            //default:
+            //case 0:
+            //    sourceNewest . IsChecked = true;
+            //    break;
+            //case 1:
+            //    sourceYesterday . IsChecked = true;
+            //    break;
+            //}
             #endregion
 
             randomCheckBox . IsChecked = Default . RandomWallpaper;
@@ -57,6 +57,14 @@ namespace IcarusWallpaper
             filterCheckBox . IsChecked = Default . FilterAspectRatio;
             ratio . Value = Default . AspectRatioLimit;
             ratioText . Text = Default . AspectRatioLimit . ToString ();
+
+            foreach ( TreeViewItem item in categoryTreeView . Items )
+            {
+                if ( item . Tag != null && (string) item . Tag == Default . FetchSource )
+                {
+                    item . IsSelected = true;
+                }
+            }
 
             autoRunCheckBox . IsChecked = AutoRun . IsEnabled;
 
@@ -116,17 +124,17 @@ namespace IcarusWallpaper
 
         }
 
-        private void sourceNewest_Checked ( object sender , RoutedEventArgs e )
-        {
-            FetchSource = WordPressCategory . Index;
-            Default . FetchSource = 0;
-        }
+        //private void sourceNewest_Checked ( object sender , RoutedEventArgs e )
+        //{
+        //    FetchSource = WordPressCategory . Index;
+        //    Default . FetchSource = 0;
+        //}
 
-        private void sourceYesterday_Checked ( object sender , RoutedEventArgs e )
-        {
-            FetchSource = WordPressCategory . Yesterday;
-            Default . FetchSource = 1;
-        }
+        //private void sourceYesterday_Checked ( object sender , RoutedEventArgs e )
+        //{
+        //    FetchSource = WordPressCategory . Yesterday;
+        //    Default . FetchSource = 1;
+        //}
 
         private void Window_Closing ( object sender , CancelEventArgs e )
         {
@@ -152,7 +160,8 @@ namespace IcarusWallpaper
         {
             var wallpaperMainSwitch = (CheckBox) sender;
             Default . WallpaperMainSwitch = (bool) wallpaperMainSwitch . IsChecked;
-            /*Default . WallpaperSetInterval = */WallpaperSetInterval = TimeSpan . Zero;
+            /*Default . WallpaperSetInterval = */
+            WallpaperSetInterval = TimeSpan . Zero;
         }
 
         private void downloadPathButton_MouseRightButtonDown ( object sender , MouseButtonEventArgs e )
@@ -225,6 +234,11 @@ namespace IcarusWallpaper
         private void autoRunCheckBox_Unchecked ( object sender , RoutedEventArgs e )
         {
             AutoRun . IsEnabled = false;
+        }
+
+        private void categoryTreeView_SelectedItemChanged ( object sender , RoutedPropertyChangedEventArgs<object> e )
+        {
+            Default . FetchSource = (string) ( (TreeViewItem) e . NewValue ) . Tag;
         }
     }
 }

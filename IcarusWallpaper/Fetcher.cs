@@ -49,22 +49,22 @@ namespace IcarusWallpaper
                 window . label1 . Content = "Fetching RSS...";
 
                 string url = "";
-                switch ( FetchSource )
-                {
-                case WordPressCategory . Index:
-                    url = IcarusNewestUrl;
-                    break;
-                case WordPressCategory . Yesterday:
-                    url = IcarusYesterdayUrl;
-                    break;
-                case WordPressCategory . Specified:
-                    throw new NotImplementedException (); // TODO
-                default:
-                    url = IcarusNewestUrl;
-                    Debug . WriteLine ( "FetchSource is invalid." );
-                    break;
-                }
-                url += "/rss";
+                //switch ( FetchSource )
+                //{
+                //case WordPressCategory . Index:
+                //    url = IcarusNewestUrl;
+                //    break;
+                //case WordPressCategory . Yesterday:
+                //    url = IcarusYesterdayUrl;
+                //    break;
+                //case WordPressCategory . Specified:
+                //    throw new NotImplementedException (); // TODO
+                //default:
+                //    url = IcarusNewestUrl;
+                //    Debug . WriteLine ( "FetchSource is invalid." );
+                //    break;
+                //}
+                url = Default . IcarusBase + Default . FetchSource + "/rss";
                 var rss = Encoding . UTF8 . GetString ( await c . DownloadDataTaskAsync ( url ) );
                 var matches = Regex . Matches ( rss , @"http://icarus\.silversky\.moe:666/illustration/\d+" );
 
@@ -73,7 +73,7 @@ namespace IcarusWallpaper
                 for ( int i = matches . Count - 1 ; i >= 0 ; i-- )
                 {
                     var match = matches [ i ];
-                    if ( FetchSource == WordPressCategory . Index && i >= fetchAmount )
+                    if ( /*FetchSource == WordPressCategory . Index &&*/ i >= fetchAmount )
                     {
                         continue;
                     }
