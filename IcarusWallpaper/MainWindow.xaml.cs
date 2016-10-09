@@ -240,5 +240,36 @@ namespace IcarusWallpaper
         {
             Default . FetchSource = (string) ( (TreeViewItem) e . NewValue ) . Tag;
         }
+
+        const string CleanUpWarningText =
+@"=== WARNING ===
+You are attempting to clean up images now. This means,
+all JPEG & PNG images in the download path will be deleted.
+    (excludes these recently downloaded images since running)
+
+MAKE SURE YOUR PERSONAL FILES ARE NOT STORED IN HERE
+
+Continue?";
+        private void cleanButton_Click ( object sender , RoutedEventArgs e )
+        {
+            if ( MessageBox . Show ( CleanUpWarningText , Title ,
+                MessageBoxButton . OKCancel , MessageBoxImage . Warning , MessageBoxResult . Cancel )
+                == MessageBoxResult . OK )
+            {
+                var dir = new DirectoryInfo ( Default . DownloadPath );
+                var jpg = dir . GetFiles ( "*.jpg" , SearchOption . TopDirectoryOnly );
+                var png = dir . GetFiles ( "*.png" , SearchOption . TopDirectoryOnly );
+                var files = new FileInfo [ jpg . Length + png . Length ];
+                Array . Copy ( jpg , files , jpg . Length );
+                Array . Copy ( png , 0 , files , jpg . Length , png . Length );
+                foreach ( var file in files )
+                {
+                    if ( !Wallpapers . Contains ( file . FullName ) )
+                    {
+                        file . Delete ();
+                    }
+                }
+            }
+        }
     }
 }

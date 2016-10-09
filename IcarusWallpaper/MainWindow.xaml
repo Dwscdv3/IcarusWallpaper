@@ -44,7 +44,14 @@
                     </Slider>
                     <TextBlock x:Name="ratioText" TextWrapping="Wrap" Text="1.00"/>
                 </StackPanel>
-                <Button x:Name="downloadPathButton" Content="Set download path..." MouseRightButtonDown="downloadPathButton_MouseRightButtonDown" ToolTip="Current working directory.&#xA;Right click to reset." Click="downloadPathButton_Click"/>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Button x:Name="downloadPathButton" Content="Set download path..." MouseRightButtonDown="downloadPathButton_MouseRightButtonDown" ToolTip="Current working directory.&#xA;Right click to reset." Click="downloadPathButton_Click" Margin="0,0,5,0"/>
+                    <Button x:Name="cleanButton" Content="Clean up" Grid.Column="1" Click="cleanButton_Click"/>
+                </Grid>
             </StackPanel>
         </GroupBox>
         <TextBlock x:Name="textBlock" Margin="185,0,0,32" TextWrapping="Wrap" VerticalAlignment="Bottom" HorizontalAlignment="Left">
