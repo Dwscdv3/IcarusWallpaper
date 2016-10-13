@@ -64,6 +64,13 @@ namespace IcarusWallpaper
                 {
                     item . IsSelected = true;
                 }
+                foreach ( TreeViewItem item2 in item.Items )
+                {
+                    if ( item2 . Tag != null && (string) item2 . Tag == Default . FetchSource )
+                    {
+                        item2 . IsSelected = true;
+                    }
+                }
             }
 
             autoRunCheckBox . IsChecked = AutoRun . IsEnabled;
@@ -256,7 +263,10 @@ Continue?";
                 MessageBoxButton . OKCancel , MessageBoxImage . Warning , MessageBoxResult . Cancel )
                 == MessageBoxResult . OK )
             {
-                var dir = new DirectoryInfo ( Default . DownloadPath );
+                var dir = new DirectoryInfo (
+                    ( Default . DownloadPath == "" || Default . DownloadPath == @"\" )
+                        ? AppDomain . CurrentDomain . SetupInformation . ApplicationBase
+                        : Default . DownloadPath );
                 var jpg = dir . GetFiles ( "*.jpg" , SearchOption . TopDirectoryOnly );
                 var png = dir . GetFiles ( "*.png" , SearchOption . TopDirectoryOnly );
                 var files = new FileInfo [ jpg . Length + png . Length ];

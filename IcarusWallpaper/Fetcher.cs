@@ -66,7 +66,7 @@ namespace IcarusWallpaper
                 //}
                 url = Default . IcarusBase + Default . FetchSource + "/rss";
                 var rss = Encoding . UTF8 . GetString ( await c . DownloadDataTaskAsync ( url ) );
-                var matches = Regex . Matches ( rss , @"http://icarus\.silversky\.moe:666/illustration/\d+" );
+                var matches = Regex . Matches ( rss , @"http://icarus\.silversky\.moe:666/illustration/\d+" ); //FIXIT: replace "illustration"
 
                 List<string> list = new List<string> ();
                 int downloaded = 0, skipped = 0, filtered = 0, actualAmount = Min ( FetchAmount , matches . Count ), fetchAmount = FetchAmount;
@@ -106,7 +106,8 @@ namespace IcarusWallpaper
                     window . label1 . Content = $"Downloading {actualAmount - i} / {actualAmount} ...";
 
                     var uri = new Uri ( Regex . Match ( html , "(?<=<img.+?)http://icarus\\.silversky\\.moe:666/wp-content/uploads/\\d{4}/\\d{2}/.+?(.jpg|.png)" ) . Value );
-                    var path = Default . DownloadPath + Regex . Match ( html , "(?<=(?<=<img.+?)http://icarus\\.silversky\\.moe:666/wp-content/uploads/\\d{4}/\\d{2}/).+?(.jpg|.png)" ) . Value;
+                    var dir = ( Default . DownloadPath == "" || Default . DownloadPath == @"\" ) ? AppDomain . CurrentDomain . SetupInformation . ApplicationBase : Default . DownloadPath;
+                    var path = dir + Regex . Match ( html , "(?<=(?<=<img.+?)http://icarus\\.silversky\\.moe:666/wp-content/uploads/\\d{4}/\\d{2}/).+?(.jpg|.png)" ) . Value;
 
                     var req = WebRequest . CreateHttp ( uri );
                     var res = req . GetResponse ();
@@ -138,7 +139,7 @@ namespace IcarusWallpaper
             catch ( Exception ex )
             {
                 var errString = $"{DateTime . Now . ToString ()}: {ex . ToString ()}\r\nMessage: {ex . Message}\r\nCall Stack:\r\n{ex . StackTrace}\r\n\r\n";
-                File . AppendAllText ( "IcarusWallpaperError.log" , errString );
+                File . AppendAllText ( AppDomain . CurrentDomain . SetupInformation . ApplicationBase + "IcarusWallpaperError.log" , errString );
                 Debug . WriteLine ( ex . Message );
                 window . label1 . Content = $"{DateTime . Now . ToShortTimeString ()}  Aborted due to a network error. (1)";
                 IsFetching = false;

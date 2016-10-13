@@ -76,7 +76,7 @@
                     <TreeViewItem Header="Low res" Tag="/category/illustration/little-low-res-wallpaper" ToolTip="&lt; 1600px" />
                     <TreeViewItem Header="Vertical" Tag="/category/illustration/phone-wallpaper" />
                 </TreeViewItem>
-                <TreeViewItem Header="Photography" Tag="/category/photography" IsExpanded="True" />
+                <!--<TreeViewItem Header="Photography" Tag="/category/photography" IsExpanded="True" />-->
             </TreeView>
         </GroupBox>
         <CheckBox x:Name="autoRunCheckBox" Content="Start up with Windows" HorizontalAlignment="Left" Margin="10,178,0,0" VerticalAlignment="Top" Checked="autoRunCheckBox_Checked" Unchecked="autoRunCheckBox_Unchecked"/>
